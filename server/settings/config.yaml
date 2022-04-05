@@ -1,0 +1,23 @@
+app:
+  name: "book_manager"
+  mod: "dev"
+
+log:
+  level: "debug"
+  filename: "book_manager_app.log"
+  max_size: 200
+  max_age: 30
+  max_backups: 7
+
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "aczidongji"
+  dbname: "book_system"
+  max_open_conns: 200
+  max_idle_conns: 50
+
+grpc:
+  network: "tcp"
+  addr: "127.0.0.1:8082"

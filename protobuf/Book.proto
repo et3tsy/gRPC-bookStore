@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option go_package="./;service";
+package service;
+
+// Msg: to response with the code
+message Msg{
+  int32 code = 1; // 1
+}
+
+// ParamInt: to post with an integer
+message ParamInt{
+  int32 param = 1; // 1
+}
+
+// ParamString: to post with a String
+message ParamString{
+  string param = 1; // 1
+}
+
+// Book: define the model of book 
+message Book{
+  int64 id = 1;       // the id
+  string title = 2;   // the title
+  string author = 3;  // the author
+  string publisher=4; // the publisher
+}
+
+// Book: define a list of books
+message BookList
+{
+  repeated Book book_list = 1;
+}
+
+service BookService{
+  rpc Add(Book) returns(Msg);                       // to add a new book into database
+  rpc QueryByID(ParamInt) returns(Book);            // to query the book by its id
+  rpc QueryByName(ParamString) returns(BookList);   // to query the book by its name
+  rpc DeleteById(ParamInt) returns(Msg);            // to delete a bool by its id
+}
