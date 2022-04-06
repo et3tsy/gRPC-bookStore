@@ -36,8 +36,8 @@ message ParamBookList
 }
 
 service BookManager{
-  rpc Add(ParamBook) returns(ParamCode);                       // to add a new book into database
+  rpc Add(ParamBook) returns(ParamCode);                 // to add a new book into database
   rpc QueryByID(ParamInt) returns(ParamBook);            // to query the book by its id
   rpc QueryByName(ParamString) returns(ParamBookList);   // to query the book by its name
-  rpc DeleteById(ParamInt) returns(ParamCode);            // to delete a bool by its id
+  rpc DeleteById(ParamInt) returns(ParamCode);           // to delete a bool by its id
 }

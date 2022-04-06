@@ -1,0 +1,2 @@
+{"level":"WARN","time":"2022-04-06T11:10:21.490+0800","caller":"mysql/book.go:19","msg":"there is no community record"}
+{"level":"ERROR","time":"2022-04-06T11:10:21.492+0800","caller":"pb/book.go:30","msg":"Query By ID Fails"}
