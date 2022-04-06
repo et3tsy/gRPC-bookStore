@@ -7,10 +7,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+// 初始化 viper
 func Init() (err error) {
-	// viper.SetConfigName("config")      // 配置文件名称,不带后缀
-	// viper.SetConfigType("yaml")        // 配置文件类型
-	// viper.AddConfigPath("./settings/") // 指定配置文件路径
 
 	viper.SetConfigFile("./settings/config.yaml") // 配置文件路径
 
