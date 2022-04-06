@@ -1,14 +1,24 @@
-# gRPC-bookStore
-
-
-
-### 简单程序设计：利用gRPC作为中间件的数据管理系统
+## 简单程序设计：利用gRPC作为中间件的数据管理系统
 
 <a href="https://imgtu.com/i/qLs2l9"><img src="https://s1.ax1x.com/2022/04/05/qLs2l9.png" alt="qLs2l9.png" border="0" /></a>
 
-### 设计说明——服务端
+### 数据库部分
 
-一般方便管理各类包和函数，我们将所有的包和函数分层。
+```sql
+create table book(
+	book_id BIGINT PRIMARY KEY,
+    price FLOAT NOT NULL,
+    pages INT NOT NULL CHECK(pages>0),
+    title VARCHAR(20) NOT NULL UNIQUE,
+    author VARCHAR(20) NOT NULL,
+    publisher VARCHAR(20) NOT NULL,
+    book_isbn VARCHAR(20) NOT NULL
+);
+```
+
+
+
+### 服务端
 
 ```
 |--dao 与操作数据库，与数据库相关
@@ -32,9 +42,7 @@
 
 
 
-### 设计说明——服务端
-
-一般方便管理各类包和函数，我们将所有的包和函数分层。
+### 客户端
 
 ```
 |--interact DOS交互设计
@@ -51,4 +59,64 @@
 ```
 
 
+
+### proto3 生成源代码（定义接口）
+
+```
+syntax = "proto3";
+
+option go_package="./;service";
+package service;
+
+// Msg: to response with the code
+message ProdMsg{
+  int32 code = 1; // 1
+}
+
+// ParamInt: to post with an integer
+message ProdParamInt{
+  int32 param = 1; // 1
+}
+
+// ParamString: to post with a String
+message ProdParamString{
+  string param = 1; // 1
+}
+
+// Book: define the model of book 
+message ProdBook{
+  int64 id = 1;       // the id
+  string title = 2;   // the title
+  string author = 3;  // the author
+  string publisher=4; // the publisher
+}
+
+// Book: define a list of books
+message ProdBookList
+{
+  repeated ProdBook book_list = 1;
+}
+
+service ProdService{
+  rpc Add(ProdBook) returns(ProdMsg);                       // to add a new book into database
+  rpc QueryByID(ProdParamInt) returns(ProdBook);            // to query the book by its id
+  rpc QueryByName(ProdParamString) returns(ProdBookList);   // to query the book by its name
+  rpc DeleteById(ProdParamInt) returns(ProdMsg);            // to delete a bool by its id
+}
+
+```
+
+生成服务端、客户端目的代码
+
+```
+protoc --go_out=plugins=grpc:./ Book.proto
+```
+
+
+
+### 设计成果展示
+
+```
+https://www.bilibili.com/video/BV1K94y1Z7td
+```
 
